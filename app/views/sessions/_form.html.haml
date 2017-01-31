@@ -1,0 +1,12 @@
+= form_for :session, url: login_path do |f|
+
+  %div.form-group.col-sm-offset-5
+    %p
+      = f.label :"email:"
+      = f.text_field :email, class: "form-control"
+    %p
+      = f.label :"password:"
+      = f.password_field :password, class: "form-control"
+
+    %br
+      = f.submit class: "btn btn-primary btn-md btn-block col-md-offset-1 login-button", value: "Login"

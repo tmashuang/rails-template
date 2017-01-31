@@ -35,26 +35,6 @@ class ProductsController < ApplicationController
     @product = Product.find(params[:id])
   end
 
-  def create
-    @product = Product.new(product_params)
-
-    if @product.save
-      @product.category_ids = params[:product][:category_ids]
-      flash[:success] = "Product created."
-      redirect_to @product
-    else
-      flash[:danger] = "Product not created."
-      render 'new'
-    end
-  end
-
-  def destroy
-    @product = Product.find(params[:id])
-    @product.destroy
-    flash[:success] = "Product deleted."
-    redirect_to products_path
-  end
-
 
   private
     def product_params

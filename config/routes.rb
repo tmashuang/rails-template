@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :carts, only: [:show, :new, :create, :edit, :index]
   get 'sessions/new'
 
   get 'login', to: 'sessions#new'
@@ -17,5 +18,5 @@ Rails.application.routes.draw do
   root 'products#index'
 
 
-  resources :categories
+resources :categories
 end

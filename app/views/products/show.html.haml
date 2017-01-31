@@ -1,0 +1,43 @@
+= render 'flash'
+
+%div.container
+  = link_to 'Back', products_path, class: "btn btn-info back-button"
+
+  %p
+    %img.product-image(src="#{@product.picture}")
+
+  %div.name
+    = @product.name
+
+  %div.price
+    $
+    = number_with_precision(@product.price, precision: 2).to_s
+
+  %div
+  = @product.quantity
+  Units Available
+
+  %div.description Description:
+  %div.product-description
+    = @product.description
+  %h5 Categories:
+  - @product.categories.each do |category|
+    = link_to category.name, category_path(category.id), class: "btn btn-xs btn-info"
+  - if @user
+    .form-group
+      - if @product.quantity > 0
+        = form_for :order, url: orders_path, :html => {:class => "cart_form"}, remote: true do |f|
+          %label
+            How Many Would You Like?
+          %br.order-quantity
+            = f.select(:quantity, options_for_select((1..@product_quantity).map{|i| i}),{}, {class: "product-quantity"})
+          = f.hidden_field :product_id, value: @product.id, class: ""
+          %p
+            = f.submit 'Add to Cart', class: "btn btn-success add-cart-button"
+      - else
+        %p
+          %button.btn.btn-secondary{"data-placement" => "bottom", "data-toggle" => "tooltip", :title => "Out of Stock", :type => "button", class: "red-tooltip"}= "Add to Cart"
+  - if @user
+    - if @user.admin? == true
+      = link_to 'Edit', edit_product_path(@product), class: "btn btn-primary"
+      = link_to 'Delete', product_path(@product), method: :delete, data: {confirm: 'Are you sure?'}, class: "btn btn-danger"
