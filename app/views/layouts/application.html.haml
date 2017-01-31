@@ -1,0 +1,33 @@
+!!!
+%html
+  %head
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+    %title Showcase
+    = csrf_meta_tags
+    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
+    = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
+  %header
+    %div#main-controller.body-container
+      %div.row-fluid
+        %div.col-xs-2
+        %div.col-xs-8
+          %span.new-product-btn
+            = link_to 'Categories', categories_path, class:'btn btn-success btn-sm'
+            - unless session[:id].nil?
+              = link_to 'Logout', logout_path, class:'btn btn-warning btn-sm'
+              = link_to 'Cart', cart_path(User.find(session[:id]).carts.last.id), class:'btn btn-info btn-sm'
+              = link_to 'Order History', carts_path, class:'btn btn-info btn-sm'
+            - else
+              = link_to 'Login', new_session_path, class:'btn btn-info btn-sm'
+              = link_to 'Register', new_user_path, class:'btn btn-info btn-sm'
+
+          %h1.title
+            = link_to 'Rails Shop', products_path
+            - if session[:id].nil?
+              %span.subtitle Good products, Better users
+            - else
+              %span.subtitle
+                = "Hello " + User.find(session[:id]).username.capitalize + "!"
+
+  %body
+    = yield

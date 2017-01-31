@@ -1,0 +1,6 @@
+= render 'flash'
+
+%div.row-fluid
+  - @products.each do |product|
+    = render 'listing', product: product
+  %br
