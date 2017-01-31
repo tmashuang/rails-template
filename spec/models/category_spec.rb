@@ -1,5 +1,17 @@
 require 'rails_helper'
 
 RSpec.describe Category, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  let(:category) { FactoryGirl.create(:category)}
+
+  describe Category do
+    it "is valid with valid attributes" do
+      
+    end
+
+    it "is not valid without a category name" do
+
+    end
+
+  end
+
 end

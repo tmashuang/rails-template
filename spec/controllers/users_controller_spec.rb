@@ -10,5 +10,5 @@ require 'rails_helper'
 #     end
 #   end
 # end
-RSpec.describe ProductsHelper, type: :helper do
+RSpec.describe UsersController, type: :controller do
 end
