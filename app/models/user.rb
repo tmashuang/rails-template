@@ -1,30 +1,34 @@
 class User < ApplicationRecord
 
+  validates :email, uniqueness: true
   validates :name, presence: true
   validates :password_hash, presence: true
-  validates :karma, numericality: true
-  validates :email, presence: true, uniqueness: true
+  	has_many :carts
+  	has_many :products_users
+  	has_many :products, through: :products_users
 
-  def password
-    @password ||= Password.new(password_hash)
-  end
+  	include BCrypt
 
-  def password=(new_password)
-    @password = Password.create(new_password)
-    self.password_hash = @password
-  end
+  	def password
+      	@password ||= Password.new(password_hash)
+  	end
 
-  def self.authenticate(email, password)
-    user = User.find_by(email: email)
-    if user
-      if user.password == password
-        return user
-      else
-        return nil
-      end
-    else
-      return user
-    end
-  end
+  	def password=(new_password)
+  		@password = Password.create(new_password)
+  		self.password_hash = @password
+  	end
+
+  	def self.authenticate(email, password)
+  		user = User.find_by(email: email)
+  		if user
+  			if user.password == password
+  				return user
+  			else
+  				return nil
+  			end
+  		else
+  			return user
+  		end
+  	end
 
 end
